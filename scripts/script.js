@@ -58,7 +58,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
     let random = Math.floor(Math.random() * theTetraminoes.length);
     let current = theTetraminoes[random][currentRotation]
 
-    // console.log(current)
+    
 
     //draw the Tetromino
 
@@ -171,12 +171,44 @@ document.addEventListener(`DOMContentLoaded`, () => {
 
     function rotate() {
         undraw()
+        const isAtRightEdge = current.some(index => ((currentPosition + index) - 9) % 10 === 0)
+        const isAtSecondToRightEdge = current.some(index => ((currentPosition + index) - 8) % 10 === 0)
+        const isAtLeftEdge = current.some(index => (currentPosition + index) % 10 === 0)
+        const lTetrominoStanding = [1, 11, 21, 31]
+        const lTetrominoLayingdown = [10, 11, 12, 13]
+
         currentRotation ++ 
-        if(currentRotation === current.length) {
+            if(currentRotation === current.length) {
             currentRotation = 0
         }
+        
 
         current = theTetraminoes[random][currentRotation]
+
+        let isLTetromino = current.reduce((sum, a) => sum + a, 0)
+        console.log(isLTetromino)
+
+        if(isAtRightEdge && isLTetromino === 46) {
+            currentPosition -= 2
+            timerID
+        }
+        if(isAtSecondToRightEdge && isLTetromino === 46) {
+            currentPosition -= 2
+            timerID
+        }
+
+        if(isAtRightEdge) {
+            currentPosition -= 1
+        }
+
+        if(current === lTetrominoStanding) {
+            console.log('true')
+        }
+
+        if(isAtLeftEdge) {
+            currentPosition += 1
+        }
+
         draw()
     }
 
@@ -259,7 +291,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
         squares.forEach(square =>{
             square.classList.remove('tetromino')
             })
-            for (let i = 0; i < 199; i++) {
+            for (let i = 0; i < 200; i++) {
                 squares[i].classList.remove('taken')
             }
             clearInterval(timerID)

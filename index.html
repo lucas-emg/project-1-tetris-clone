@@ -6,33 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetris Clone</title>
     <link rel="stylesheet" href="styles/style.css" />
-    <link rel="icon" type="image/x-icon" href="favicon-32x32.png" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
+    <h3><span id="game-over"></span></h3>
     <main>
       <div class="container-btn-score">
         <img src="logo.png" alt="" />
-        <h3>Score: <span id="score">0</span></h3>
 
         <!-- <button id="start-button">Start/Pause</button> -->
-        <p>Pess <span>Space</span> to Start or Pause</p>
+        <p>Pess <span class="red">Space</span> to Start or Pause</p>
         <!-- <button id="reset-button">Reset</button> -->
-        <p>Press <span>Enter</span> to Reset</p>
-
-        <p>How about some music to go along? Please support </p>
+        <p>Press <span class="red">Enter</span> to Reset</p>
+        <p>
+          If you played the video,
+          <a class="red" href="#">click here to retrieve controls</a>
+        </p>
+        <div class="video">
+          <p>
+            How about some music to go along?<br />
+            Please support Birp FM
+            <a href="https://streamlabs.com/indieplaylists/tip" target="_blank"
+              >here</a
+            >
+          </p>
+        </div>
 
         <iframe
           id="iframeId"
           width="400"
           height="700"
-          src="https://www.youtube-nocookie.com/embed/qi3Hfy8waFo?autoplay=1"
+          src="https://www.youtube-nocookie.com/embed/qi3Hfy8waFo"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
-
-        <h3><span id="game-over"></span></h3>
       </div>
 
       <div class="grid">
@@ -246,36 +255,46 @@
         <div class="taken"></div>
         <div class="taken"></div>
         <div class="taken"></div>
-        
       </div>
 
-      <div class="mini-grid">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        
+      <div class="grid-and-score">
+        <div class="controls">
+          <p class="smaller-text red">CONTROLS:</p>
+          <p class="smaller-text">↑ Rotate</p>
+          <p class="smaller-text">← Moves left (hold to move faster)</p>
+          <p class="smaller-text">→ Moves right (hold to move faster)</p>
+          <p class="smaller-text">↓ Moves down (hold to move faster)</p>
+        </div>
+        <div class="mini-grid">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+        <h3>Score: <span id="score">0</span></h3>
+      </div>
     </main>
     <script src="scripts/script.js"></script>
   </body>
