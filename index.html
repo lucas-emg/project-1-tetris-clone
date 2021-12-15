@@ -6,13 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetris Clone</title>
     <link rel="stylesheet" href="styles/style.css" />
+    <link rel="icon" type="image/x-icon" href="favicon-32x32.png" />
   </head>
   <body>
     <main>
       <div class="container-btn-score">
         <img src="logo.png" alt="" />
         <h3>Score: <span id="score">0</span></h3>
-        <button id="start-button">Start/Pause</button>
+
+        <!-- <button id="start-button">Start/Pause</button> -->
+        <p>Pess <span>Space</span> to Start or Pause</p>
+        <!-- <button id="reset-button">Reset</button> -->
+        <p>Press <span>Enter</span> to Reset</p>
+
+        <p>How about some music to go along? Please support </p>
+
+        <iframe
+          id="iframeId"
+          width="400"
+          height="700"
+          src="https://www.youtube-nocookie.com/embed/qi3Hfy8waFo?autoplay=1"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+
+        <h3><span id="game-over"></span></h3>
       </div>
 
       <div class="grid">
@@ -226,7 +246,36 @@
         <div class="taken"></div>
         <div class="taken"></div>
         <div class="taken"></div>
+        
       </div>
+
+      <div class="mini-grid">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        
     </main>
     <script src="scripts/script.js"></script>
   </body>

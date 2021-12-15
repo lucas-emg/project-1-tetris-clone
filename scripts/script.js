@@ -3,8 +3,13 @@ document.addEventListener(`DOMContentLoaded`, () => {
     const width = 10
     const grid = document.querySelector('.grid')
     let squares = Array.from(document.querySelectorAll('.grid div'))
-    const ScoreDisplay = document.querySelector('#score')
-    const StartButton = document.querySelector('#start-button')
+    const scoreDisplay = document.querySelector('#score')
+    const startButton = document.querySelector('#start-button')
+    const resetButton = document.querySelector('#reset-button')
+    const gameOverDisplay = document.querySelector('#game-over')
+    let nextRandom = 0
+    let timerID
+    let score = 0
 
 
     //The Tetrominoes
@@ -53,7 +58,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
     let random = Math.floor(Math.random() * theTetraminoes.length);
     let current = theTetraminoes[random][currentRotation]
 
-    console.log(current)
+    // console.log(current)
 
     //draw the Tetromino
 
@@ -73,7 +78,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
     }
 
     //make the tetromino move down every second
-    timerID = setInterval(moveDown, 1000)
+    // timerID = setInterval(moveDown, 1000)
 
     //assign functions to keycodes
     function control(e) {
@@ -85,10 +90,25 @@ document.addEventListener(`DOMContentLoaded`, () => {
             moveDown()
         } else if (e.key === 'ArrowUp') {
             rotate()
+        } else if (e.code === 'Space') {
+            if (timerID) {
+                clearInterval(timerID)
+                timerID = null
+            } else {
+                draw()
+                timerID = setInterval(moveDown, 1000)
+                // nextRandom = Math.floor(Math.random()*theTetraminoes.length)
+                // displayShape()
+            }
+        } else if (e.code === 'Enter') {
+            reset()
         }
+
+
+        
     }
 
-    document.addEventListener('keyup', control)
+    document.addEventListener('keydown', control)
 
     //move down function
     function moveDown() {
@@ -96,6 +116,8 @@ document.addEventListener(`DOMContentLoaded`, () => {
         currentPosition += width
         draw()
         freeze()
+
+    
     }
 
     //stop on the bottom of the page function
@@ -104,10 +126,14 @@ document.addEventListener(`DOMContentLoaded`, () => {
             current.forEach(index => squares[currentPosition + index].classList.add('taken'))
 
             //start a new falling tetromino
-            random = Math.floor(Math.random() * theTetraminoes.length)
+            random = nextRandom
+            nextRandom = Math.floor(Math.random() * theTetraminoes.length)
             current = theTetraminoes[random][currentRotation]
             currentPosition = 4
             draw()
+            displayShape()
+            addScore()
+            gameOver()
         }
     }
 
@@ -135,7 +161,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
         if(!isAtRightEdge) currentPosition += 1
 
         if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
-            currentPoistion -= 1
+            currentPosition -= 1
         }
 
         draw()
@@ -154,5 +180,102 @@ document.addEventListener(`DOMContentLoaded`, () => {
         draw()
     }
 
+    //show up-next tetromino in mini-grid
+
+    const displaySquares =  document.querySelectorAll('.mini-grid div')
+    const displayWidth = 5
+    let displayIndex = 0
+
+    const upNextTetrominos = [
+        [2, displayWidth+2, displayWidth*2+2, 3], //lTetromino
+        [displayWidth*2+1, displayWidth*2+2, displayWidth+2, displayWidth+3], //zTetromino
+        [displayWidth+1, displayWidth+2, displayWidth+3, displayWidth*2+2], //tTetromino
+        [displayWidth+1, displayWidth+2, displayWidth*2+1, displayWidth*2+2], //o tetromino
+        [displayWidth+2, displayWidth*2+2, displayWidth*3+2, displayWidth*4+2] //lTetromino
+        
+    ]
+
+    //display the shape in the mini-grid
+
+    function displayShape() {
+        displaySquares.forEach(square => {
+            square.classList.remove('tetromino')
+        })
+
+        upNextTetrominos[nextRandom].forEach( index => {
+            displaySquares[displayIndex + index].classList.add('tetromino')
+        })
+    }
+
+    //add a function to the button
+    startButton.addEventListener('click', () => {
+        if (timerID) {
+            clearInterval(timerID)
+            timerID = null
+        } else {
+            draw()
+            timerID = setInterval(moveDown, 1000)
+            // nextRandom = Math.floor(Math.random()*theTetraminoes.length)
+            // displayShape()
+        }
+    })
+
+
+    //reset button
+    resetButton.addEventListener('click', () => {
+        reset()
+    })
+
+    //adding score
+    function addScore() {
+        for(let i = 0; i <  199; i +=width) {
+            const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
+
+            if(row.every(index => squares[index].classList.contains('taken'))) {
+                score += 10
+                scoreDisplay.innerHTML = score
+                row.forEach(index => {
+                    squares[index].classList.remove('taken')
+                    squares[index].classList.remove('tetromino')
+                })
+                const squaresRemoved = squares.splice(i, width);
+                squares = squaresRemoved.concat(squares)
+                squares.forEach(cell => grid.appendChild(cell))
+            }
+        }
+    }
     
+    //game over
+    function gameOver() {
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            gameOverDisplay.innerHTML = 'Game Over'
+            clearInterval(timerID)
+        }
+
+        return true
+    }
+
+    function reset() {
+        squares.forEach(square =>{
+            square.classList.remove('tetromino')
+            })
+            for (let i = 0; i < 199; i++) {
+                squares[i].classList.remove('taken')
+            }
+            clearInterval(timerID)
+            score = 0
+            scoreDisplay.innerHTML = score
+            currentPosition = 4
+            currentRotation = 0
+            let newRandom = Math.floor(Math.random() * theTetraminoes.length);
+            random = newRandom
+            current = theTetraminoes[random][currentRotation]
+            timerID = setInterval(moveDown, 1000)
+            gameOverDisplay.innerHTML = ''
+
+    }
+
+    
+    
+
 })
