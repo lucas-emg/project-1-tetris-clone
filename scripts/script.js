@@ -273,6 +273,9 @@ document.addEventListener(`DOMContentLoaded`, () => {
                 const squaresRemoved = squares.splice(i, width);
                 squares = squaresRemoved.concat(squares)
                 squares.forEach(cell => grid.appendChild(cell))
+                clearInterval(timerID)
+                timerID = setInterval(moveDown, 1000)
+                
             }
         }
     }
